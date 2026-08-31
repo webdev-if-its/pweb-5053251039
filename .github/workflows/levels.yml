@@ -1,0 +1,84 @@
+name: levels
+
+# Jalan setiap kali mahasiswa push, dan bisa dijalankan manual dari tab Actions.
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  nilai:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Jalankan test tiap pertemuan
+        id: nilai
+        run: |
+          mkdir -p .hasil
+          echo "[]" > .hasil/progres.json
+
+          # Setiap folder m01, m02, ... yang punya package.json dianggap
+          # satu pertemuan. Folder yang belum ada dilewati begitu saja.
+          for dir in m[0-9][0-9]; do
+            [ -f "$dir/package.json" ] || continue
+            echo "::group::$dir"
+
+            ( cd "$dir" && (npm ci --no-audit --no-fund || npm install --no-audit --no-fund) ) \
+              > /dev/null 2>&1 || echo "npm install gagal di $dir"
+
+            # Test yang merah itu normal — jangan hentikan workflow.
+            # Tiap folder pertemuan menyediakan skrip "levels:ci" yang menulis
+            # hasil JSON. Jest dan Vitest sama-sama menghasilkan bentuk ini.
+            ( cd "$dir" && npm run levels:ci --silent ) || true
+            [ -f .hasil/HASIL.json ] && mv .hasil/HASIL.json ".hasil/$dir.json" 
+
+            node scripts/ringkas-level.js ".hasil/$dir.json" "$dir" >> .hasil/baris.ndjson
+            echo "::endgroup::"
+          done
+
+          # Gabungkan jadi satu file
+          if [ -f .hasil/baris.ndjson ]; then
+            node -e "
+              const fs=require('fs');
+              const baris=fs.readFileSync('.hasil/baris.ndjson','utf8')
+                .split('\n').filter(Boolean).map(JSON.parse);
+              fs.writeFileSync('.hasil/progres.json', JSON.stringify({
+                repo: process.env.GITHUB_REPOSITORY,
+                diperbarui: new Date().toISOString(),
+                pertemuan: baris
+              }, null, 2));
+            "
+          fi
+
+      - name: Tulis ringkasan
+        if: always()
+        run: |
+          {
+            echo "## Progres level"
+            echo ""
+            echo "| Pertemuan | Level tertinggi | Test lulus |"
+            echo "|---|---|---|"
+            node -e "
+              const p=require('./.hasil/progres.json');
+              for (const m of p.pertemuan || []) {
+                const bar = '█'.repeat(m.tertinggi) + '░'.repeat(Math.max(0, 10 - m.tertinggi));
+                console.log('| ' + m.pertemuan + ' | ' + bar + ' ' + m.tertinggi + '/10 | ' +
+                            m.lulus + '/' + m.total + ' |');
+              }
+            " 2>/dev/null || echo "| — | belum ada pertemuan | — |"
+            echo ""
+            echo "Level dihitung **berurutan**: kalau Level 3 merah, Level 8 tidak dihitung."
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Simpan progres sebagai artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: progres
+          path: .hasil/progres.json
+          retention-days: 90
+          if-no-files-found: warn
