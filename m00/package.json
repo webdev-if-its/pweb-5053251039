@@ -1,0 +1,14 @@
+{
+  "name": "pemweb-m00",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "levels": "node ../scripts/jalankan-levels.js",
+    "levels:watch": "vitest",
+    "levels:ci": "vitest run --reporter=json --outputFile=../.hasil/HASIL.json"
+  },
+  "devDependencies": {
+    "jsdom": "^24.1.0",
+    "vitest": "^2.0.0"
+  }
+}
