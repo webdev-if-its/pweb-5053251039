@@ -83,8 +83,8 @@ body {
 /* Level 10 — Tema gelap */
 @media (prefers-color-scheme: dark) {
   :root {
-    --warna-aksen: #8fd3a8;
-    --warna-latar: #1e1e1e;
-    --warna-teks: #f5f5f5;
+    --warna-aksen: #3c1fe0;
+    --warna-latar: #000000;
+    --warna-teks: #ea00ff;
   }
 }
