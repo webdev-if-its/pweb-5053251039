@@ -1,0 +1,90 @@
+/* PERTEMUAN 2 — CSS: Selector, Box Model, Spesifisitas
+   Baca SOAL.md untuk urutan levelnya. */
+
+
+/* Level 2 — Selector Elemen, Class, dan ID */
+
+/* 1. Element Selector */
+h2 {
+  font-size: 1.5rem;
+}
+
+/* 2. Class Selector */
+.deskripsi {
+  color: blue;
+}
+
+/* 3. ID Selector */
+#judul-utama {
+  text-align: center;
+}
+
+
+/* Level 3 — Box Model */
+.kotak {
+  background-color: var(--warna-latar);
+  padding: 20px;
+  border: 2px solid black;
+  margin: 20px;
+}
+
+
+/* Level 4 — Box Sizing */
+* {
+  box-sizing: border-box;
+}
+
+
+/* Level 5 — Child Combinator */
+.daftar > li {
+  list-style: square;
+}
+
+
+/* Level 6 — Hover dan Focus Visible */
+.tombol:hover {
+  background-color: var(--warna-aksen);
+}
+
+.tombol:focus-visible {
+  background-color: var(--warna-aksen);
+}
+
+
+/* Level 7 — Kalahkan aturan tanpa !important */
+p.pengumuman {
+  color: #999999;
+}
+
+/* Selector ID lebih spesifik */
+#pengumuman-utama {
+  color: var(--warna-aksen);
+}
+
+
+/* Level 8 — Satuan rem untuk teks */
+h1 {
+  font-size: 2rem;
+}
+
+
+/* Level 9 — Variabel CSS di :root */
+:root {
+  --warna-aksen: #2c6e49;
+  --warna-latar: #eef7ee;
+  --warna-teks: #333333;
+}
+
+body {
+  color: var(--warna-teks);
+}
+
+
+/* Level 10 — Tema gelap */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --warna-aksen: #8fd3a8;
+    --warna-latar: #1e1e1e;
+    --warna-teks: #f5f5f5;
+  }
+}
