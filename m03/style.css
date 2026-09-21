@@ -1,0 +1,59 @@
+/* PERTEMUAN 3 — Layout: Flexbox dan Grid
+   Baca SOAL.md untuk urutan levelnya. */
+
+body {
+  font-family: system-ui, sans-serif;
+  margin: 0;
+  padding: 1rem;
+}
+
+/* Level 1 */
+.kartu-flex {
+  display: flex;
+}
+
+.kartu {
+  background-color: #eef7ee;
+  padding: 1rem;
+  border: 1px solid #2c6e49;
+}
+
+/* Level 2 */
+
+/* Level 3  */
+
+/* Level 4 */
+.tata-letak {
+}
+
+.sidebar {
+  background-color: #f0f0f0;
+  padding: 1rem;
+}
+
+.konten {
+  background-color: #ffffff;
+  padding: 1rem;
+}
+
+/* Level 5 */
+.info-kontak {
+}
+
+/* Level 6 */
+.kisi {
+}
+
+.kartu-grid {
+  background-color: #eef7ee;
+  border: 1px solid #2c6e49;
+  padding: 1rem;
+}
+
+/* Level 7 */
+
+/* Level 8 */
+
+/* Level 9
+
+   Level 10 */
