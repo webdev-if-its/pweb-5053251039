@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Katalog — Taman Baca RW 04</title>
+</head>
+<body>
+
+  <header>
+    <h1>Katalog Taman Baca RW 04</h1>
+  </header>
+
+  <main>
+    <section id="pengumuman">
+      <h2 id="judul-pengumuman">Pengumuman Terbaru</h2>
+      <ul id="daftar-pengumuman">
+        <li>Donasi buku anak dibuka setiap Sabtu.</li>
+        <li>Perpanjangan pinjam maksimal 2 kali.</li>
+        <li>Taman Baca tutup di hari libur nasional.</li>
+      </ul>
+    </section>
+
+    <section id="cari">
+      <h2>Cari buku</h2>
+      <form id="form-cari">
+        <label for="input-cari">Judul buku</label>
+        <input id="input-cari" type="text" name="cari" autocomplete="off">
+        <button type="submit">Cari</button>
+      </form>
+    </section>
+
+    <section id="koleksi">
+      <h2>Koleksi</h2>
+      <p id="ringkasan"></p>
+      <div id="katalog"></div>
+    </section>
+
+    <section id="detail">
+      <h2>Detail</h2>
+      <div id="panel-detail">Klik salah satu kartu untuk melihat detail.</div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Taman Baca RW 04</p>
+  </footer>
+
+  <script type="module" src="script.js"></script>
+</body>
+</html>
